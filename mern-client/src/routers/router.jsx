@@ -64,12 +64,13 @@ const router = createBrowserRouter([
                 element:<EditBooks/>,
                 loader:({params})=>fetch(`http://localhost:3000/book/${params.id}`)
             },
-            {
-                path:"sign-up",
-                element:<Signup/>
-            }
+            
 
         ]   
+    },
+    {
+        path:"sign-up",
+        element:<Signup/>
     }
 ]);
 export default router;
