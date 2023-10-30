@@ -57,22 +57,8 @@ const SideBar = () => {
               Log Out
             </p>
           </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiArrowSmRight}
-          >
-            <p>
-              Sign In
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiTable}
-          >
-            <p>
-              Sign Up
-            </p>
-          </Sidebar.Item>
+          
+          
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
           <Sidebar.Item

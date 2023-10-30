@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-
+import googleLogo from '../assets/google-logo.svg'
 
 const Signup = () => {
 
@@ -12,6 +12,7 @@ const Signup = () => {
         console.log(email,password);
 
     }
+    //sign up using gmail onClick={handleRegister}
     return (
 
         <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -39,6 +40,10 @@ const Signup = () => {
                                     <button className="bg-blue-500 text-white rounded-md px-6 py-2">Sign up</button>
                                 </div>
                             </form>
+                        </div>
+                        <hr/>
+                        <div className='flex w-full items-center flex-col mt-5 gap-3'>
+                            <button  className='block'> <img src= {googleLogo} alt='' className='w-12 h-12 inline-block'></img>Login with Google</button>
                         </div>
                     </div>
                 </div>

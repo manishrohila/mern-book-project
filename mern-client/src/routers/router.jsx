@@ -14,6 +14,8 @@ import ManageBooks from "../dashboard/ManageBooks";
 import EditBooks from "../dashboard/EditBooks";
 import Dashboard from "../dashboard/Dashboard";
 import Signup from "../components/Signup";
+import Login from "../components/Login";
+import Logout from "../components/Logout";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -71,6 +73,15 @@ const router = createBrowserRouter([
     {
         path:"sign-up",
         element:<Signup/>
+    },
+    {
+        path:"login",
+        element:<Login/>
+    },
+    {
+        path:"logout",
+        element:<Logout/>
     }
+
 ]);
 export default router;
