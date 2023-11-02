@@ -51,7 +51,7 @@ const SideBar = () => {
             </p>
           </Sidebar.Item>
           <Sidebar.Item
-            href="/login"
+            href="/sign-up"
             icon={HiUser}
           >
             <p>
