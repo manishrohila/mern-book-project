@@ -42,6 +42,15 @@ const SideBar = () => {
             </p>
           </Sidebar.Item>
           <Sidebar.Item
+            href="#"
+            icon={HiArrowSmRight
+            }
+          >
+            <p>
+              Products
+            </p>
+          </Sidebar.Item>
+          <Sidebar.Item
             href="/login"
             icon={HiUser}
           >
@@ -51,7 +60,7 @@ const SideBar = () => {
           </Sidebar.Item>
           <Sidebar.Item
             href="/logout"
-            icon={HiShoppingBag}
+            icon={HiTable}
           >
             <p>
               Log Out

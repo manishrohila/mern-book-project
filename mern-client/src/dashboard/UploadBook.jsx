@@ -59,21 +59,21 @@ const UploadBook = () => {
     console.log(bookObj);
     //send data to db
     fetch("http://localhost:3000/upload-book", {
-      method: 'POST', 
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
       },
-      body:JSON.stringify(bookObj)
-      
+      body: JSON.stringify(bookObj)
+
     })
       .then((res) => res.json())
       .then((data) => {
-       
+
         alert('Book uploaded successfully');
         form.reset();
       })
       .catch((error) => {
-        
+
         console.error('Error:', error);
       });
 
@@ -82,9 +82,9 @@ const UploadBook = () => {
   return (
     <div className='px-4 my-12'>
       <h2 className='mb-8 text-3xl font-bold'>Upload a Book</h2>
-      <form onSubmit={handleBooksubmit} className="flex lg:w-[1080px] flex-col flex-wrap gap-4">
+      <form onSubmit={handleBooksubmit} className="flex lg:w-[970px] flex-col flex-wrap gap-4">
         {/* first row */}
-        <div className='flex gap-8'>
+        <div className='flex gap-12'>
           <div className='lg:w-1/2'>
 
             <div className="mb-2 block">

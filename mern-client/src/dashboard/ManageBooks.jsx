@@ -23,7 +23,7 @@ const ManageBooks = () => {
       <h2 className='mb-8 text-3xl font-bold'> Manage Your Books</h2>
       {/**table for book data */}
 
-      <Table className='lg:w-[1180px]'>
+      <Table className='lg:w-[970px]'>
       <Table.Head>
       <Table.HeadCell>
           NO

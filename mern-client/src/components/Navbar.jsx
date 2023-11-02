@@ -12,7 +12,7 @@ export default function Navbar() {
 
     useEffect(()=>{
         const handleScroll =()=>{
-            if(window.scrollY>100)
+            if(window.scrollY>10)
             {
                 setIsStickey(true);
             }
