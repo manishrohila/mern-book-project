@@ -42,12 +42,12 @@ const SideBar = () => {
             </p>
           </Sidebar.Item>
           <Sidebar.Item
-            href="#"
+            href="/"
             icon={HiArrowSmRight
             }
           >
             <p>
-              Products
+              Home
             </p>
           </Sidebar.Item>
           <Sidebar.Item
