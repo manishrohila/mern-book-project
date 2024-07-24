@@ -1,118 +1,89 @@
+const express = require('express');
+const app = express();
+require('dotenv').config();
+const port = process.env.PORT || 4000;
+const cors = require('cors');
+const { login, signup } = require('./controllers/Auth.jsx');
+const mongoose = require('mongoose');
+const Books = require("./models/BookSchema.jsx");
 
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000;
-const cors = require('cors')
-
-//middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// MongoDB connection
+require("./config/database.jsx").connect();
 
-//mongodb configuration
-
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = "mongodb+srv://bookManager:12345@cluster0.t3yf04q.mongodb.net/?retryWrites=true&w=majority";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-  
+// Insert a book to the db: POST method
+app.post('/upload-book', async (req, res) => {
+  try {
+    const data = req.body;
+    const book = new Books(data);
+    const result = await book.save();
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
-async function run() {
+// Get all books from the database
+app.get("/all-books", async (req, res) => {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-
-    //create a collectio of documents
-    const booksCollections = client.db("BookInventory").collection("books");
-
-    //insert a book to the db: post method
-    app.post('/upload-book',async (req,res)=>{
-        const data = req.body;
-        const result = await booksCollections.insertOne(data);
-        res.send(result);
-    })
-    
-    // get al books from the data base
-    app.get("/all-books",async (req,res)=>{
-        const books= booksCollections.find();
-        const result = await books.toArray();
-        res.send(result);
-    })
-
-    //update a book data: patch or update data
-    app.patch("/book/:id", async (req,res)=>{
-        const id = req.params.id;
-        //console.log(id);
-        const updateBookData = req.body;
-        const filter= {_id: new ObjectId(id)};
-        
-
-        const updateDoc = {
-            $set:{
-                ...updateBookData
-            },
-        }
-        const options = {upsert:true};
-
-        //update
-        const result = await booksCollections.updateOne(filter,updateDoc,options);
-        res.send(result);
-    })
-
-    //delete a book data
-    app.delete('/book/:id',async (req,res)=>{
-        const id = req.params.id;
-        const filter = {_id: new ObjectId(id)};
-        const result = await booksCollections.deleteOne(filter);
-        res.send(result);
-    })
-
-    //find by category
-    app.get("/all-books",async (req,res)=>{
-        let query = {};
-        if(req.query?.category)
-        {
-            query={category:req.query.category}
-
-        }
-        const result = await booksCollections.find(query).toArray();
-        res.send(result);
-
-    })
-    // to get single book data
-
-    app.get('/book/:id',async(req,res)=>{
-      const id = req.params.id;
-      const filter = {_id:new ObjectId(id)};
-      const result= await booksCollections.findOne(filter);
-      res.send(result);
-    })
-
-
-
-
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
+    let query = {};
+    if (req.query?.category) {
+      query = { category: req.query.category };
+    }
+    const result = await Books.find(query).exec();
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
   }
-}
-run().catch(console.dir);
+});
 
+// Update a book data: PATCH method
+app.patch("/book/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateBookData = req.body;
+    const result = await Books.findByIdAndUpdate(id, updateBookData, { new: true });
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// Delete a book data: DELETE method
+app.delete('/book/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await Books.findByIdAndDelete(id);
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// Get single book data: GET method
+app.get('/book/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await Books.findById(id);
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// For signup
+app.post('/sign-up', signup);
+
+// For login
+app.post('/login', login);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  res.send('Hello World!');
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
